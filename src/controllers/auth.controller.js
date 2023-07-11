@@ -11,7 +11,8 @@ export const register = async (req, res) => {
             password
         })
         console.log(newUser)
-        await newUser.save()   
+        const userSaverd = await newUser.save()
+        res.json(userSaverd)
         res.send("registrando")
 
         
