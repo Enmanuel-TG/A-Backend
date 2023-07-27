@@ -11,4 +11,5 @@ app.use(express.json());
 app.use(cookieParse());
 app.use("/api", authRouter);
 app.get("/helthz", (_req, res) => res.send("ok"));
+
 export default app;
