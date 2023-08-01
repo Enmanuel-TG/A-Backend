@@ -15,7 +15,7 @@ export const register = async (req, res) => {
     });
     console.log(newUser);
     const userSaverd = await newUser.save();
-
+  
     const token = await createAccessToken({ id: userSaverd.id });
     res.cookie("token", token);
     res.json({
@@ -65,18 +65,19 @@ export const logout = (_req, res) => {
 };
 
 export const profile = async (req, res) => {
+  const userFound = await User.findById(req.user.id);
 
-    const  userFound = await User.findById(req.user.id)
-
-  if(!userFound){return res.status(404).json({
-    message: "User not found"})
+  if (!userFound) {
+    return res.status(404).json({
+      message: "User not found",
+    });
   }
 
   return res.json({
-    id : userFound._id,
-    username : userFound.username,
+    id: userFound._id,
+    username: userFound.username,
     email: userFound.email,
     createdAt: userFound.createdAt,
-    updatedAt: userFound.updatedAt
-  })
+    updatedAt: userFound.updatedAt,
+  });
 };
