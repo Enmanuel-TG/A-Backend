@@ -1,0 +1,8 @@
+{
+  "username":"Nomeacuerdo",
+  "email":"pruebalogin",
+  "password":"sisiesaes"
+}
+
+
+
