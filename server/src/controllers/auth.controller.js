@@ -8,6 +8,12 @@ export const register = async (req, res) => {
   console.log(email, password, username);
 
   try {
+
+    const userFound = await User.findOne({email})
+    if (userFound) {
+      return res.status(400).json(['the email is already in use']);
+     }
+
     const passwordhash = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
@@ -16,7 +22,7 @@ export const register = async (req, res) => {
     });
     console.log(newUser);
     const userSaverd = await newUser.save();
-  
+
     const token = await createAccessToken({ id: userSaverd.id });
     res.cookie("token", token);
     res.json({
