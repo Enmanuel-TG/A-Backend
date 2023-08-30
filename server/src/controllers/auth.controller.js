@@ -88,3 +88,4 @@ export const profile = async (req, res) => {
     updatedAt: userFound.updatedAt,
   });
 };
+
