@@ -17,6 +17,9 @@ function LoginPage() {
   const { singin, errors: singinErrors } = useAuth();
   const onSubmit = handleSubmit((data) => {
     singin(data);
+    if (singinErrors == []) {
+      console.log("llego vacio")
+    }
   });
 
   return (
@@ -24,10 +27,13 @@ function LoginPage() {
       <div className="w-96 bg-zinc-800  p-10 rounded-md">
         <p className="text-white text-2xl mb-3">Login</p>
 
+
         {singinErrors.map((error, i) => (
           <div className="bg-red-500 text-white p-2" key={i}>
             {error}
           </div>
+
+
         ))}
         <form onSubmit={onSubmit}>
           <div>
