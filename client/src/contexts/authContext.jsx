@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyRequest } from "../api/auth";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const singUp = async (user) => {
     try {
@@ -36,26 +38,59 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await loginRequest(user);
       console.log(res);
+      setIsAuthenticated(true);
+      setUser(res.data);
     } catch (error) {
       console.log(error.response.data);
-      setErrors(error.response.data)
+      setErrors(error.response.data);
     }
   };
 
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
-        setErrors([])
-      }, 5000)
-      return () => clearTimeout(timer)
-     }
-   }, [errors])
+        setErrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
+
+  useEffect(() => {
+    async function checkLogin() {
+      const cookies = Cookies.get();
+      if (!cookies.token) {
+        setIsAuthenticated(false);
+        setLoading(false)
+        return setUser(null);
+      }
+      try {
+        const res = await verifyRequest(cookies.token);
+        console.log(res);
+        if (!res.data) {
+          setIsAuthenticated(false);
+          setLoading(false);
+          return;
+        }
+        setIsAuthenticated(true);
+        setUser(res.data);
+        setLoading(false);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+
+        console.log(error);
+      }
+    }
+    checkLogin();
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         singUp,
         singin,
+        loading,
         user,
         isAuthenticated,
         errors,
