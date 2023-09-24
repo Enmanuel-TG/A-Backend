@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function LoginPage() {
   const createaccount = () => {
@@ -14,13 +15,19 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { singin, errors: singinErrors } = useAuth();
+  const { singin, errors: singinErrors, isAuthenticated } = useAuth();
   const onSubmit = handleSubmit((data) => {
     singin(data);
     if (singinErrors == []) {
       console.log("llego vacio");
     }
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/tasks")
+     }
+   },[isAuthenticated])
 
   return (
     <div className="flex h-[calc(80vh-100px)]  items-center justify-center ">

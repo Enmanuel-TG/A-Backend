@@ -22,6 +22,11 @@ function RegisterPage() {
     singUp(values);
     console.log(user);
   });
+   useEffect(() => {
+     if (isAuthenticated) {
+       navigate("/tasks");
+     }
+   }, [isAuthenticated]);
 
   return (
     <div className="flex h-[calc(80vh-100px)]  items-center justify-center ">
