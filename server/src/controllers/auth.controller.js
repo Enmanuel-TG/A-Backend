@@ -55,7 +55,7 @@ export const login = async (req, res) => {
     res.cookie("token", token);
     res.json({
       id: userFound._id,
-      usernmane: userFound.username,
+      username: userFound.username,
       email: userFound.email,
       createdAt: userFound.createdAt,
       updatedAt: userFound.updatedAt,

@@ -8,12 +8,14 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRouter from "./ProtectedRouter";
 import { TaskProvider } from "./contexts/TasksContext";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
+          <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
             {/*Si pones  un * en el path cual url que no existe te  lleva a ese elemento "Es como si fuera  un valor por default" */}
