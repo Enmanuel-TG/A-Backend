@@ -20,7 +20,7 @@ export default function NavBar() {
               </Link>
             </li>
             <li>
-              <Link to="/tasks"     className="bg-indigo-500 px-4 py-1 rounded-sm">
+              <Link to="/tasks" className="bg-indigo-500 px-4 py-1 rounded-sm">
                 Read Tasks
               </Link>
             </li>

@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         user,
         isAuthenticated,
         errors,
+        setErrors
       }}
     >
       {children}
